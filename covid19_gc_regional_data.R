@@ -1,5 +1,5 @@
 # load packages
-x <- c("dplyr")
+x <- c("dplyr", "lubridate", "stringr")
 lapply(x, require, character.only = T)
 rm(x)
 
@@ -28,4 +28,12 @@ myfiles  <-  lapply(files,
                     header = TRUE)
 
 # change names in file list
+files_names <- str_replace_all(files_names,
+                               "dpc-covid19-ita-regioni-", "")
+files_names <- str_replace_all(files_names,
+                               ".csv", "")
+files_names <- as.Date(files_names, "%Y%m%d")
+
+# assign names to elements of the list
+names(myfiles) <- files_names 
 
