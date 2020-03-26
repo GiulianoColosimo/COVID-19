@@ -35,5 +35,12 @@ files_names <- str_replace_all(files_names,
 files_names <- as.Date(files_names, "%Y%m%d")
 
 # assign names to elements of the list
-names(myfiles) <- files_names 
+names(myfiles) <- files_names
+
+# transform data column
+myfiles <- lapply(myfiles,
+                  function(x) {x["data"] <- as_datetime(x$data); x})
+
+# collapse list in df
+myfiles_df <- bind_rows(myfiles)
 
