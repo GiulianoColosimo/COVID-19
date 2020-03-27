@@ -1,5 +1,5 @@
 # load packages
-x <- c("dplyr", "lubridate", "stringr")
+x <- c("dplyr", "ggplot2", "gganimate", "lubridate", "stringr", "tidyverse")
 lapply(x, require, character.only = T)
 rm(x)
 
