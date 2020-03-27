@@ -1,0 +1,24 @@
+# The following code has to be run from the terminal/console
+# It is used to update the branched local repository with the most uptodate info
+# from the original repository 
+
+# change directory to where local repository is
+cd /Users/Cinghio/Dropbox/r/Code and Examples/covid19/COVID-19
+
+# Add the remote, call it "upstream":
+# I am not sure if this has to be run everytime or only the first time
+git remote add upstream https://github.com/pcm-dpc/COVID-19.git
+
+
+# Fetch all the branches of that remote into remote-tracking branches,
+# such as upstream/master:
+git fetch upstream
+
+# Make sure that you're on your master branch:
+git checkout master
+
+
+# Rewrite your master branch so that any commits of yours that
+# aren't already in upstream/master are replayed on top of that
+# other branch:
+git rebase upstream/master
