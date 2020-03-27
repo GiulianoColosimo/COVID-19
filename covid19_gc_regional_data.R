@@ -41,6 +41,46 @@ names(myfiles) <- files_names
 myfiles <- lapply(myfiles,
                   function(x) {x["data"] <- as_datetime(x$data); x})
 
+
+# Total number of positive cases to date
+# add a rank column to list
+myfiles <- lapply(myfiles, cbind, rank = c(""))
+
+# rank dfs based on "totale_attualmente_positivi" column
+myfiles <- lapply(myfiles,
+       function(x) {x["rank"] <- rank(-x$totale_attualmente_positivi,
+                                         ties.method = "first"); x})
+
 # collapse list in df
 myfiles_df <- bind_rows(myfiles)
 
+# Make graph and animation
+p <- ggplot(myfiles_df,
+            aes(rank,
+                group = denominazione_regione, 
+                fill = as.factor(denominazione_regione),
+                color = as.factor(denominazione_regione))) +
+  #scale_x_continuous(limits = c(0, 50000)) +
+  geom_tile(aes(y = totale_attualmente_positivi/2, 
+                height = totale_attualmente_positivi,
+                width = 0.9), alpha = 0.8, color = NA) +
+  geom_text(aes(y = 0, label = paste(denominazione_regione, " ")),
+            vjust = 0.2, hjust = 1) +
+  geom_text(aes(y = totale_attualmente_positivi,
+                label = paste(totale_attualmente_positivi, " ")),
+            vjust = 0.2, hjust = -.1) +
+  coord_flip(clip = "off", expand = FALSE) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_reverse() +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title='{closest_state}', x = "", y = "Totale Positivi per Giorno") +
+  theme(plot.title = element_text(hjust = 0, size = 22),
+        axis.ticks.y = element_blank(),  # These relate to the axes post-flip
+        axis.text.y  = element_blank(),  # These relate to the axes post-flip
+        plot.margin = margin(1,1,1,4, "cm")) +
+  transition_states(date(myfiles_df$data), transition_length = 4, state_length = 1) +
+  ease_aes('cubic-in-out')
+
+tot_att_pos_anim<- animate(p, fps = 25, duration = 20, width = 800, height = 600)
+
+anim_save("tot_att_pos_anim.gif", animation = tot_att_pos_anim, "~/Desktop/")
