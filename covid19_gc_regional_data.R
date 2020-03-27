@@ -84,7 +84,7 @@ p <- ggplot(myfiles_df,
 
 tot_att_pos_anim<- animate(p, fps = 25, duration = 20, width = 800, height = 600)
 
-anim_save("tot_att_pos_anim.gif", animation = tot_att_pos_anim, "~/Desktop/")
+anim_save("regional_tot_att_pos_anim.gif", animation = tot_att_pos_anim, "../figures/")
 
 # Total number of positive cases to date
 # rank dfs based on "totale_attualmente_positivi" column
@@ -124,5 +124,5 @@ p <- ggplot(myfiles_df,
 
 new_att_pos_anim<- animate(p, fps = 25, duration = 20, width = 800, height = 600)
 
-anim_save("new_att_pos_anim.gif", animation = tot_att_pos_anim, "~/Desktop/")
+anim_save("regional_new_att_pos_anim.gif", animation = tot_att_pos_anim, "../figures/")
 

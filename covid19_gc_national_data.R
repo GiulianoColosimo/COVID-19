@@ -46,12 +46,21 @@ myfiles <- lapply(myfiles,
 myfiles_df <- bind_rows(myfiles)
 
 
-myfiles_df_a <- myfiles_df[, c("data", "terapia_intensiva", "nuovi_attualmente_positivi")]
+myfiles_df_a <- myfiles_df[, c("data",
+                               "terapia_intensiva",
+                               "nuovi_attualmente_positivi",
+                               "deceduti",
+                               "dimessi_guariti")]
 
 myfiles_df_a_long <- gather(myfiles_df_a,
                             key = "type",
                             value = "count",
                             -data)
 
-ggplot(myfiles_df_a_long, aes(x=data, y=count, fill=type)) +
+myfiles_df_a_long_plot <- ggplot(myfiles_df_a_long, aes(x=data, y=count, fill=type)) +
   geom_bar(stat="identity", color = "black", position=position_dodge())
+
+png("../figures/national_comparison_bar_plot.png",
+    width = 14, height = 9, units = "in", res = 1200)
+myfiles_df_a_long
+dev.off()
