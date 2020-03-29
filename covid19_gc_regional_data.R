@@ -1,5 +1,9 @@
 # load packages
+<<<<<<< HEAD
 x <- c("dplyr", "ggplot2", "gganimate", "lubridate", "stringr", "tidyverse")
+=======
+x <- c("dplyr")
+>>>>>>> add comments
 lapply(x, require, character.only = T)
 rm(x)
 
@@ -28,6 +32,7 @@ myfiles  <-  lapply(files,
                     header = TRUE)
 
 # change names in file list
+<<<<<<< HEAD
 files_names <- str_replace_all(files_names,
                                "dpc-covid19-ita-regioni-", "")
 files_names <- str_replace_all(files_names,
@@ -125,4 +130,6 @@ p <- ggplot(myfiles_df,
 new_att_pos_anim<- animate(p, fps = 25, duration = 20, width = 800, height = 600)
 
 anim_save("regional_new_att_pos_anim.gif", animation = tot_att_pos_anim, "../figures/")
+=======
+>>>>>>> add comments
 
